@@ -1,0 +1,21 @@
+.idea
+.vscode
+###> project ###
+!.env.example
+.env
+.env.local
+.env.production
+vendor/
+var/
+
+###> Docker ###
+.docker/.env
+.make/.env
+###< Docker ###
+
+composer.phar
+/.phpunit.cache
+/node_modules
+/public/storage
+/storage/*.key
+.phpunit.result.cache
