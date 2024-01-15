@@ -6,7 +6,7 @@
  presents the life cycle I use to develop software (app, modules, etc.) using the Test Driven Development technique.
 
   This is only a demo and is not the final product, it is a sample script for recruitment purposes,
- also 'Test doubles' to prepare
+ also need 'Test doubles' to prepare
 
   
 ## Technical specification
@@ -72,7 +72,22 @@
          - when the given day falls on 'dateOfBirth'
 
          - when the given day does not fall in 'dateOfBirth'
+
+    Results of tests: 
+
+         ---
+        Testing started at 10:28 ...
+        PHPUnit 10.5.3 by Sebastian Bergmann and contributors.
         
+        Runtime:       PHP 8.2.14
+        Configuration: /var/www/app/phpunit.xml
         
-# 03. Refactor
+        Time: 00:00.471, Memory: 24.00 MB
+        
+        OK (20 tests, 20 assertions)
+        
+        Process finished with exit code 0      
+         ---  
+      
+# 03. Refactor and improving code quality.
      
