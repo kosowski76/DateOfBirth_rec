@@ -1,2 +1,56 @@
 # DateOfBirth_rec
-Task: Write a single class representing the Date of birth (DOB) of an example person.
+ Task: Write a single class representing the Date of birth (DOB) of an example person.
+    - original task description in the attachment
+    
+  This is a demo script created for recruitment purposes,
+ presents the life cycle I use to develop software (app, modules, etc.) using the Test Driven Development technique.
+
+  This is only a demo and is not the final product, it is a sample script for recruitment purposes,
+ also 'Test doubles' to prepare
+
+  
+## Technical specification
+
+    Tools used at the development stage: PHP 8.2, PHPUnit 10.5, Xdebug 3.3
+    Environment: Linux Debian 10 Buster
+    
+    I used the Test Driven Development technique to complete the task,
+    it is a demonstration of the general life cycle 
+    when creating a module (some product, application project)
+
+
+# 01. Formulation and analysis of the problem.
+
+    - The class allows the user to get the current age in plain text according to the format:
+    
+         • DOB is less than 17 years old: ‘Young’
+         • DOB is between 18 - 60 years old: ‘Adult’
+         • DOB is over 60 years old: ‘Senior’
+    
+        using the $personDOB->getPlainTextAge() function
+
+    - The class should calculate how many specific days of the week (e.g. 'Monday') a person has experienced so far
+
+          $personDOB->countWeekDays('Monday')
+
+    Missed to explain:
+
+     - what timezone?
+    
+     - how store '$currentDateTime' and how to choose access to $currentDateTime
+
+     - age ranges, 'less than 17 years old' and 'between 18 - 60 years old'
+         what with 17 years? 17 is Young or Adult?
+        
+     - can the '$personDOB->getPlainTextAge()' method be changed to accept parameters,
+         it is easier to test.
+
+     - The format of the entered date has not been specified? (YYYY-MM-DD), how should it behave when an incorrect format is entered, an exception is thrown?
+
+     - It is not specified how the class should behave for the entered future date
+     
+     
+# 02. Design and preparation of test support - preparing method names for tests, etc.     
+     
+     
+     
