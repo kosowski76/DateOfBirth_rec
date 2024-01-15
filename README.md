@@ -1,6 +1,6 @@
 # DateOfBirth_rec
  Task: Write a single class representing the Date of birth (DOB) of an example person.
-    - original task description in the attachment
+    - original task description file: 'Tech Test.pdf' in the attachment.
     
   This is a demo script created for recruitment purposes,
  presents the life cycle I use to develop software (app, modules, etc.) using the Test Driven Development technique.
@@ -52,5 +52,27 @@
      
 # 02. Design and preparation of test support - preparing method names for tests, etc.     
      
-     
+    Test:
+         project_path/tests/Unit/Src/Domain/DataOfBirthMechanicsTest.php
+
+     directories:
+         project_path/app/Domain/DateOfBirth/DateOfBirth.php
+
+     handling labels using Enum:
+    
+     sending date to method: $personDOB->getPlainTextAge(MM-DD-YYYY),
+     the getPlainTextAge(MM-DD-YYYY) method sends time intervals to the ageCalc() converter method to set the age level 'Age': Young, Adult, Senior
+
+     test for method
+
+     a function that converts the number of days from a given date, taking into account leap years
+    
+     calculation of specific days
+
+         - when the given day falls on 'dateOfBirth'
+
+         - when the given day does not fall in 'dateOfBirth'
+        
+        
+# 03. Refactor
      
