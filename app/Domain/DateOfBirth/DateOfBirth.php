@@ -1,9 +1,9 @@
 <?php
-
 //
 namespace App\Domain\DateOfBirth;
 
 use DateTime;
+use DateTimeZone;
 use Exception;
 
 enum AgesRanges: string {
@@ -15,69 +15,94 @@ enum AgesRanges: string {
 
 class DateOfBirth {
 
-    private string $personDateTime;
     protected DateTime $personDateTime;
+    protected DateTime $currentDateTime;
 
     public function __construct(string $dateOfBirth) {
 
         /* todo: make to validation of input $dateOfBirth
            now is only checking format not compare $dataOfBirth
            to correct data from string: "2024-01-1r" goes to "2024-01-01" */
-        try {
-            $this->personDateTime = new DateTime($dateOfBirth);
-        } catch (Exception $e) {
-            echo "Data Format Exception: ". $e->getMessage() . PHP_EOL; }
+        if(!($this->personDateTime = new DateTime($dateOfBirth, new DateTimeZone('Europe/Warsaw')))) {
+            throw new Exception("Data Format Exception"); }
 
+        $this->currentDateTime = new DateTime('now', new DateTimeZone('Europe/Warsaw'));
     }
 
-    public function getPersonDateTime(): DateTime {
-        return $this->personDateTime; }
+    /* method getPlainTextAge() was changed and 'DateTime' can get by argument,
+        that is better for the tests, or get current time form other method  */
+    public function getPlainTextAge($currentDateTime): string {
 
-    public function getPlainTextAge(): string {
+        // years calculations from $personDateTime and $currentDateTime
+        $years = $this->yearsCalc($this->personDateTime, $currentDateTime);
 
-        return "";
-        // years calculations from $personDateTime
-        $years = $this->yearsCalc($this->personDateTime);
-
-        // scope setup
-        $scopeSetup = $this->ageCalc($years);
-
-        return $scopeSetup->value;
-    }
-
-    public function countWeekDays(string $day): string {
-        return "";
-    }
-
-    protected function ageCalc(int $years): AgesRanges {
-
-        if($years < 17) {
+        if($years <= 17) {
             $ageRange = AgesRanges::Young;
-        } elseif($years >= 17 && $years <= 60) {
+        } elseif($years > 17 && $years <= 60) {
             $ageRange = AgesRanges::Adult;
         } else {
             $ageRange = AgesRanges::Senior;
         }
 
-        return $ageRange;
+        return $ageRange->value;
+    }
+
+    public function countWeekDaysInPeriod(string $day): int {
+
+        // todo: funcktion for 'dateTime' order verification
+
+        $personDayNameOfBirth = $this->personDateTime->format("l");
+        if($day === $personDayNameOfBirth) {
+
+            $totalDays = $this->daysCalc($this->personDateTime, $this->currentDateTime);
+
+            return ($totalDays / 7);
+
+        } else {
+
+            $weekDayDateTime = new DateTime($this->personDateTime->format("Y-m-d"));
+            $nextWeekDay = "next ". $day;
+            $nextDateTime = $weekDayDateTime->modify($nextWeekDay);
+
+            $totalDays = $this->daysCalc($nextDateTime, $this->currentDateTime);
+
+            $intWeekDayDateTime = intval($weekDayDateTime->format("N"));
+            $intPersonDayDateTime = intval($this->personDateTime->format("N"));
+            if($intWeekDayDateTime < $intPersonDayDateTime) {
+                return ($totalDays / 7) + 1;
+            } else {
+                return ($totalDays / 7);
+            }
+        }
     }
 
     // years calculations from $personDateTime
-    public function yearsCalc(DateTime $date): int {
+    protected function yearsCalc(DateTime $personDateTime, DateTime $currentDateTime): int {
 
-        $currentDateTime = new DateTime();
+        if ($currentDateTime < $personDateTime) {
 
-        //$personDateOfBirth = $this->personDateTime->format("y");
+            throw new Exception(
+                sprintf('"%s" is not a valid date of birth.',
+                    $personDateTime->format("Y-m-d")), 100);
+        }
 
+        $difference = $personDateTime->diff($currentDateTime);
 
+        return $difference->y;
+    }
 
+    protected function daysCalc(DateTime $dateTimeBegin, DateTime $dateTimeEnd): int {
 
-        $years = 0;
+        if ($dateTimeEnd < $dateTimeBegin) {
 
+            throw new Exception(
+                sprintf('"%s" is not a valid date for count days.',
+                    $dateTimeBegin->format("Y-m-d")), 100);
+        }
 
-        if ($years < -1) {
-            throw new Exception("Number Format Exception: -1"); }
+        $difference = $dateTimeBegin->diff($dateTimeEnd);
+        $days = $difference->days;
 
-        return $years;
+        return $days;
     }
 }
